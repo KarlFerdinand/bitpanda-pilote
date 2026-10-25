@@ -4,6 +4,10 @@ from __future__ import annotations
 from datetime import date
 
 
+def _fr(x: float) -> str:
+    return f"{x:.2f}".replace(".", ",")
+
+
 def iso_week(d: date) -> str:
     year, week, _ = d.isocalendar()
     return f"{year}-W{week:02d}"
@@ -42,7 +46,7 @@ class Ledger:
         week = iso_week(today)
         if not self.d.get("week"):
             self.d.update(week=week, reserve=round(weekly, 2), spent_week=0.0, credited_total=round(weekly, 2))
-            return f"Premier lancement : {weekly:.2f} € crédités pour la semaine {week}."
+            return f"Premier lancement : {_fr(weekly)} € crédités pour la semaine {week}."
         if self.d["week"] == week:
             return None
         n = weeks_between(self.d["week"], week)
@@ -57,9 +61,9 @@ class Ledger:
         self.d.update(week=week, reserve=round(after, 2), spent_week=0.0)
         self.d["credited_total"] = round(float(self.d.get("credited_total", 0.0)) + credited, 2)
         if credited < n * weekly - 0.005:
-            return (f"Nouvelle semaine {week} : {credited:.2f} € crédités "
-                    f"(réserve plafonnée à {cap:.2f} €).")
-        return f"Nouvelle semaine {week} : {credited:.2f} € crédités."
+            return (f"Nouvelle semaine {week} : {_fr(credited)} € crédités "
+                    f"(réserve plafonnée à {_fr(cap)} €).")
+        return f"Nouvelle semaine {week} : {_fr(credited)} € crédités."
 
     def spend(self, amount: float) -> None:
         self.d["reserve"] = round(self.reserve - amount, 2)

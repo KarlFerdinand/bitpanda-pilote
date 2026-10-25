@@ -94,6 +94,7 @@ Le journal réel est dans `journal/live/`, séparé de la simulation.
 
 | Je veux… | Je fais… |
 |---|---|
+| Analyser tout mon portefeuille Bitpanda | **Actions → Run workflow → analyse** (lecture seule). Résultat dans `journal/PORTEFEUILLE.md` : répartition, concentration, plus/moins-values, écart à la cible du bot. |
 | Changer mon budget | Variable GitHub `WEEKLY_BUDGET_EUR` (ex. `30`), ou `budget.weekly_eur` dans `config.yaml`. Pense à ajuster le plafond Bitpanda si tu l'augmentes. |
 | Mettre en pause | Variable `LIVE_TRADING` = `false` (retour en simulation), ou `enabled: false` dans `config.yaml` (plus rien du tout). |
 | Arrêt d'urgence total | Supprime la clé API dans Bitpanda. |
@@ -133,9 +134,10 @@ bot/strategy.py          coefficient d'opportunité, choix des actifs, ventes
 bot/budget.py            budget hebdomadaire et report du non-dépensé
 bot/broker.py            ordres Bitpanda (devis contrôlé puis accepté) et simulation
 bot/report.py            journal Markdown et registre CSV
-bot/main.py              orchestration + commandes check / set-limit
+bot/portfolio.py         analyse de tout le portefeuille Bitpanda (lecture seule)
+bot/main.py              orchestration + commandes check / set-limit / analyse
 .github/workflows/bot.yml  planification GitHub Actions
-tests/                   50 tests (relancés avant chaque exécution)
+tests/                   53 tests (relancés avant chaque exécution)
 ```
 
 En local : `pip install -r requirements.txt`, puis `python -m pytest` et `python -m bot.main` (simulation).

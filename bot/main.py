@@ -3,6 +3,7 @@
 run        exécution quotidienne (par défaut)
 check      vérifie la connexion Bitpanda, les actifs et les prix, sans rien acheter
 set-limit  pose le plafond journalier d'achat/vente sur la clé API Bitpanda
+analyse    analyse tout ton portefeuille Bitpanda (lecture seule) → journal/PORTEFEUILLE.md
 """
 from __future__ import annotations
 
@@ -369,7 +370,7 @@ def set_limit(cfg: dict, env: dict, *, client=None) -> int:
 def main(argv: list[str] | None = None) -> int:
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s : %(message)s")
     parser = argparse.ArgumentParser(prog="bot", description="Bitpanda Pilote")
-    parser.add_argument("command", nargs="?", default="run", choices=["run", "check", "set-limit"])
+    parser.add_argument("command", nargs="?", default="run", choices=["run", "check", "set-limit", "analyse"])
     args = parser.parse_args(argv)
     try:
         cfg = load_config()
@@ -381,6 +382,9 @@ def main(argv: list[str] | None = None) -> int:
         return check(cfg, env)
     if args.command == "set-limit":
         return set_limit(cfg, env)
+    if args.command == "analyse":
+        from .portfolio import analyse
+        return analyse(cfg, env)
     report = run(cfg, env)
     print(report.headline())
     return 1 if report.error else 0

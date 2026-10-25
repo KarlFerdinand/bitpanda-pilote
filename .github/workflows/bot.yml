@@ -8,9 +8,9 @@ on:
   workflow_dispatch:
     inputs:
       command:
-        description: "run = exécution normale · check = vérifier Bitpanda · set-limit = poser le plafond journalier"
+        description: "run = exécution normale · check = vérifier Bitpanda · set-limit = poser le plafond journalier · analyse = analyser mon portefeuille"
         type: choice
-        options: [run, check, set-limit]
+        options: [run, check, set-limit, analyse]
         default: run
 
 permissions:

@@ -81,7 +81,10 @@ class FakeClient:
 
     def assets(self, **filters):
         rows = []
+        wanted = set(filters["id"].split(",")) if filters.get("id") else None
         for a in self.cfg["universe"]:
+            if wanted is not None and self.ids[a["key"]] not in wanted:
+                continue
             if filters.get("isin") and a.get("isin") != filters["isin"]:
                 continue
             if filters.get("symbol") and a.get("symbol") != filters["symbol"]:

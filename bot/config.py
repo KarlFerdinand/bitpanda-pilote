@@ -31,6 +31,7 @@ DEFAULTS: dict = {
         "etf": 0.6, "actions": 0.2, "crypto": 0.2,
         "max": {"etf": 1.0, "actions": 0.30, "crypto": 0.25},
         "rebalance_band": 0.05,
+        "scope": "account",
     },
     "signals": {
         "sma_short": 50,
@@ -125,6 +126,8 @@ def validate(cfg: dict) -> None:
         raise ConfigError("mode doit valoir 'paper' ou 'live'")
 
     alloc = cfg["allocation"]
+    if alloc.get("scope", "account") not in ("account", "bot"):
+        raise ConfigError("allocation.scope doit valoir 'account' ou 'bot'")
     total = sum(float(alloc.get(s, 0)) for s in SLEEVES)
     if abs(total - 1.0) > 0.01:
         raise ConfigError(f"allocation : etf + actions + crypto doit faire 1 (actuellement {total:g})")

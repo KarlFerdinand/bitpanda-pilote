@@ -80,6 +80,9 @@ def _execute(cfg, env, report, state, data, client, agent_fetch, today):
     if not cfg.get("enabled", True) or (ROOT / "PAUSE").exists():
         report.notes.append("bot en pause (enabled: false ou fichier PAUSE présent) : aucun ordre")
         return
+    if state.get("last_run") == today.isoformat() and env.get("BOT_FORCE_RUN") != "1":
+        report.notes.append("le bot a déjà tourné aujourd'hui : rien de plus (évite les achats en double)")
+        return
 
     ledger = Ledger(state.setdefault("ledger", {}))
     report.ledger_note = ledger.roll(today, float(b["weekly_eur"]), float(b["max_reserve_weeks"]))
@@ -136,6 +139,12 @@ def _execute(cfg, env, report, state, data, client, agent_fetch, today):
                 m["peak"] = max(float(m.get("peak") or 0.0), signals[key].price)
     cash = broker.cash_eur()
 
+    # 3b) Le reste de ton compte Bitpanda (lecture seule), pour répartir les achats
+    external = None
+    if cfg["allocation"].get("scope", "account") == "account" and (client or env.get("BITPANDA_API_KEY")):
+        external = _account_outside_bot(cfg, client or BitpandaClient(env["BITPANDA_API_KEY"]),
+                                        holdings, signals, report)
+
     # 4) Veille d'actualité (optionnelle)
     api_key = env.get("ANTHROPIC_API_KEY", "").strip()
     if cfg["agent"].get("enabled") and api_key and signals:
@@ -151,7 +160,7 @@ def _execute(cfg, env, report, state, data, client, agent_fetch, today):
 
     # 5) Plan du jour
     plan = build_plan(today, cfg, assets, signals, holdings, meta, ledger.reserve, ledger.spent_week,
-                      state.get("pending", {}), market, broker.tradeable, cash)
+                      state.get("pending", {}), market, broker.tradeable, cash, external)
     report.multipliers, report.reasons = plan.multipliers, plan.reasons
     report.notes.extend(plan.notes)
     pending = dict(plan.pending)
@@ -213,6 +222,40 @@ def _execute(cfg, env, report, state, data, client, agent_fetch, today):
             "name": names.get(key, key), "qty": qty, "price": price,
             "value": qty * price if price else 0.0, "avg": avg, "cost": qty * avg if avg else 0.0,
         })
+
+
+def _account_outside_bot(cfg, client, holdings, signals, report):
+    """Valeur de tes positions Bitpanda hors bot, par poche et par actif suivi (lecture seule)."""
+    from .config import SLEEVES
+    from .portfolio import CLASS_TO_SLEEVE, build_positions
+
+    try:
+        positions, _ = build_positions(client, cfg)
+    except Exception as exc:
+        report.notes.append(f"compte Bitpanda illisible ({type(exc).__name__}) : répartition calculée sur le bot seul")
+        return None
+    by_isin = {a["isin"]: a["key"] for a in cfg["universe"] if a.get("isin")}
+    by_symbol = {a["symbol"]: a["key"] for a in cfg["universe"] if a.get("symbol")}
+    sleeves = {s: 0.0 for s in SLEEVES}
+    keys: dict[str, float] = {}
+    for p in positions:
+        sleeve = CLASS_TO_SLEEVE.get(p["class"]) or ("etf" if p["class"] == "Métaux" else None)
+        if not sleeve:
+            continue
+        key = by_isin.get(p["isin"]) or by_symbol.get(p["symbol"])
+        value = float(p["value"] or 0.0)
+        if report.mode == "live" and key in holdings and key in signals:
+            value = max(0.0, value - holdings[key].quantity * signals[key].price)  # pas de double compte
+        sleeves[sleeve] += value
+        if key:
+            keys[key] = keys.get(key, 0.0) + value
+    total = sum(sleeves.values())
+    if total > 0:
+        parts = ", ".join(f"{label} {sleeves[s] / total:.0%}" for s, label in
+                          (("etf", "ETF"), ("actions", "actions"), ("crypto", "crypto")))
+        report.account_note = (f"Ton compte Bitpanda hors bot vaut {eur(total)} ({parts}) : "
+                               "le bot en tient compte pour répartir ses achats, sans jamais le vendre.")
+    return {"sleeves": sleeves, "keys": keys}
 
 
 def run(cfg: dict, env: dict | None = None, *, data=None, client=None, agent_fetch=None,

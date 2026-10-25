@@ -315,7 +315,10 @@ def pick_assets(sleeve: str, amount: float, signals: dict, assets: dict, market:
 
 def build_plan(today: date, cfg: dict, assets: dict, signals: dict, holdings: dict, meta: dict,
                reserve: float, spent_week: float, pending: dict, market: MarketContext,
-               tradeable: Callable[[str, str], bool], cash: float | None = None) -> Plan:
+               tradeable: Callable[[str, str], bool], cash: float | None = None,
+               external: dict | None = None) -> Plan:
+    """external = le reste du compte Bitpanda ({'sleeves': {poche: €}, 'keys': {clé: €}}), compté pour la
+    répartition et les plafonds, jamais vendu."""
     b = cfg["budget"]
     weekly = float(b["weekly_eur"])
     min_order = float(b["min_order_eur"])
@@ -324,7 +327,13 @@ def build_plan(today: date, cfg: dict, assets: dict, signals: dict, holdings: di
 
     values = {k: h.quantity * signals[k].price for k, h in holdings.items() if k in signals and k in assets}
     sleeve_values = {s: sum(v for k, v in values.items() if assets[k]["sleeve"] == s) for s in SLEEVES}
-    total = sum(values.values())
+    ext = external or {}
+    for s in SLEEVES:
+        sleeve_values[s] += float((ext.get("sleeves") or {}).get(s, 0.0))
+    values_all = dict(values)
+    for k, v in (ext.get("keys") or {}).items():
+        values_all[k] = values_all.get(k, 0.0) + float(v)
+    total = sum(sleeve_values.values())
 
     sells = plan_sells(signals, holdings, meta, assets, cfg, today, tradeable)
 
@@ -369,7 +378,7 @@ def build_plan(today: date, cfg: dict, assets: dict, signals: dict, holdings: di
         amount = round(min(pending[s], spend_left), 2)
         if amount < min_order:
             continue
-        orders = pick_assets(s, amount, signals, assets, market, values, total, cfg, tradeable, notes)
+        orders = pick_assets(s, amount, signals, assets, market, values_all, total, cfg, tradeable, notes)
         if not orders:
             if core_of(assets, s) is None and s != "etf":  # repli sur l'ETF, la poche diversifiée
                 notes.append(f"aucune ligne {SLEEVE_LABELS[s].lower()} achetable (tendance) : "

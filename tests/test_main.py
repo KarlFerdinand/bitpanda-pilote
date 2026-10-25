@@ -143,3 +143,32 @@ def test_news_parsing_and_pause_turn(cfg):
     m = MarketContext()
     news.apply_view(m, out)
     assert m.veto == {"BTC"}
+
+
+def test_paper_run_counts_whole_account(cfg, tmp_path):
+    hist = uptrend_histories(cfg)
+    prices = {a["key"]: float(hist[a["yahoo"]].iloc[-1]) for a in cfg["universe"]}
+    client = FakeClient(cfg, prices)
+    client.extra_rows = [  # compte existant : beaucoup de crypto et d'actions, peu d'ETF
+        {"asset_id": "id-BTC", "balance": {"value": "1"}, "currency_balance": {"value": "1100"}},
+        {"asset_id": "id-MSFT", "balance": {"value": "1"}, "currency_balance": {"value": "1800"}},
+        {"asset_id": "id-MSCI_WORLD", "balance": {"value": "1"}, "currency_balance": {"value": "400"}},
+    ]
+    reports = run_days(cfg, tmp_path, date(2026, 10, 26), 5, env={"BITPANDA_API_KEY": "k"},
+                       data=FakeData(hist), client=client)
+    assert reports[0].mode == "paper" and "hors bot vaut" in reports[0].account_note
+    sleeves = {o.sleeve for r in reports for o, _ in r.executed}
+    assert sleeves == {"etf"}            # crypto 33 % et actions 55 % : tout l'argent neuf va aux ETF
+    assert not client.accepted           # simulation : aucun ordre réel
+
+    cfg["allocation"]["scope"] = "bot"
+    reports = run_days(cfg, tmp_path / "bot", date(2026, 10, 26), 5, env={"BITPANDA_API_KEY": "k"},
+                       data=FakeData(hist), client=client)
+    assert reports[0].account_note is None
+
+
+def test_second_run_same_day_does_nothing(cfg, tmp_path):
+    d = date(2026, 10, 30)
+    first = run_days(cfg, tmp_path, d, 1)[0]
+    second = run_days(cfg, tmp_path, d, 1)[0]
+    assert first.executed and not second.executed and "déjà tourné" in second.notes[-1]

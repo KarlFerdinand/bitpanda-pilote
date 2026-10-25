@@ -31,6 +31,8 @@ allocation:
     actions: 0.30
     crypto: 0.25
   rebalance_band: 0.05          # tolérance avant de réorienter les achats
+  scope: account                # account = répartir en tenant compte de TOUT ton compte Bitpanda
+                                # (lecture seule, rien n'est vendu) ; bot = seulement ce que le bot achète
 
 signals:
   sma_short: 50                 # moyenne mobile courte (jours de cotation)

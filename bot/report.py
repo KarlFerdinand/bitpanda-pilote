@@ -32,6 +32,7 @@ class RunReport:
     mode: str
     notes: list = field(default_factory=list)
     ledger_note: str | None = None
+    account_note: str | None = None
     reserve: float = 0.0
     spent_week: float = 0.0
     weekly: float = 0.0
@@ -81,6 +82,8 @@ class RunReport:
               f"- Portefeuille : **{eur(total_value)}**"
               + (f" (coût {eur(total_cost)}, {pct(total_value / total_cost - 1)})" if total_cost else ""),
               ""]
+        if self.account_note:
+            L += [f"> {self.account_note}", ""]
         if self.ledger_note:
             L += [f"> {self.ledger_note}", ""]
 

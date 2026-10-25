@@ -100,6 +100,7 @@ Le journal réel est dans `journal/live/`, séparé de la simulation.
 | Arrêt d'urgence total | Supprime la clé API dans Bitpanda. |
 | Voir ce qu'il a fait | `journal/live/DERNIER.md` (ou `paper`), ou les notifications ntfy. |
 | Ajouter / retirer une action | Section `universe` de `config.yaml` : une ligne avec ISIN, code Yahoo, `currency: USD` si elle est cotée en dollars, `sleeve: actions`. Relance ensuite **check**. |
+| Tenir compte (ou non) de mes autres avoirs Bitpanda | `allocation.scope` : `account` (par défaut) répartit les achats en comptant tout ton compte, sans jamais rien vendre ; `bot` ne regarde que ce que le bot a acheté. |
 | Changer la répartition | `allocation.etf`, `allocation.actions`, `allocation.crypto` (total = 1). Ex. `0.8 / 0 / 0.2` pour revenir sans actions. |
 
 Les modifications de `config.yaml` se font directement sur GitHub (icône crayon ✏️), y compris depuis un navigateur sur téléphone.
@@ -137,7 +138,7 @@ bot/report.py            journal Markdown et registre CSV
 bot/portfolio.py         analyse de tout le portefeuille Bitpanda (lecture seule)
 bot/main.py              orchestration + commandes check / set-limit / analyse
 .github/workflows/bot.yml  planification GitHub Actions
-tests/                   53 tests (relancés avant chaque exécution)
+tests/                   55 tests (relancés avant chaque exécution)
 ```
 
 En local : `pip install -r requirements.txt`, puis `python -m pytest` et `python -m bot.main` (simulation).

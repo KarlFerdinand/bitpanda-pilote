@@ -1,6 +1,6 @@
 # Bitpanda Pilote
 
-Agent d'investissement automatique pour Bitpanda, avec un budget hebdomadaire ajustable (50 € par défaut), réparti en trois poches : **60 % ETF, 20 % actions de grandes entreprises (10 US, 10 européennes), 20 % cryptos majeures** (Bitcoin, Ethereum). Il tourne gratuitement sur GitHub Actions, du lundi au vendredi en milieu d'après-midi, et démarre **en simulation** : aucun euro réel n'est engagé tant que tu ne l'as pas décidé.
+Agent d'investissement automatique pour Bitpanda, avec un budget hebdomadaire ajustable (50 € par défaut), réparti en **70 % ETF solides et 30 % actions** de grandes entreprises, classées par thème : IA, tech, luxe, pharma et « opportunités ». Aucun achat de crypto (tes cryptos existantes ne sont jamais vendues par le bot). Il tourne gratuitement sur GitHub Actions, du lundi au vendredi en milieu d'après-midi, et démarre **en simulation** : aucun euro réel n'est engagé tant que tu ne l'as pas décidé.
 
 > ⚠️ Ce bot est un outil, pas un conseil en investissement. Il peut perdre de l'argent, comme toute stratégie. N'y mets que des sommes dont tu peux te passer.
 
@@ -27,7 +27,8 @@ Agent d'investissement automatique pour Bitpanda, avec un budget hebdomadaire aj
 - Contrôle chaque devis Bitpanda avant de l'accepter : prix à moins de 3 % du prix de référence, frais ≤ 2,5 %, devis non expiré.
 - Ne touche **jamais** à ce que tu possédais déjà sur Bitpanda : il ne gère que les quantités qu'il a achetées.
 - En cas de doute sur l'exécution d'un ordre (coupure réseau), il s'arrête pour la journée et te prévient.
-- Plafonds : 1 semaine de budget par jour au maximum ; crypto ≤ 25 % et actions ≤ 30 % du portefeuille ; une action seule ≤ 8 %, un ETF satellite ≤ 40 %.
+- Plafonds : 1 semaine de budget par jour au maximum ; actions ≤ 40 % du portefeuille ; un thème d'actions ≤ 15 % ; une action seule ≤ 8 % ; un ETF satellite ≤ 40 %.
+- Une action n'est achetée que si le consensus des analystes (Yahoo Finance) est « achat » : note moyenne ≤ 2,5 sur 5, au moins 5 analystes, objectif de cours au-dessus du cours actuel.
 - La clé API Bitpanda ne peut **pas** retirer d'argent (ce droit n'existe pas dans l'API).
 
 ---
@@ -138,7 +139,7 @@ bot/report.py            journal Markdown et registre CSV
 bot/portfolio.py         analyse de tout le portefeuille Bitpanda (lecture seule)
 bot/main.py              orchestration + commandes check / set-limit / analyse
 .github/workflows/bot.yml  planification GitHub Actions
-tests/                   55 tests (relancés avant chaque exécution)
+tests/                   60 tests (relancés avant chaque exécution)
 ```
 
 En local : `pip install -r requirements.txt`, puis `python -m pytest` et `python -m bot.main` (simulation).

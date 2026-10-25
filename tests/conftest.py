@@ -28,10 +28,16 @@ def make_series(start=100.0, daily=0.001, n=300, noise=0.0, seed=0, tail=None, e
 
 
 class FakeData:
-    def __init__(self, histories: dict, vix=18.0, fng=50):
+    def __init__(self, histories: dict, vix=18.0, fng=50, consensus: dict | None = None):
         self.histories = histories
         self._vix = vix
         self._fng = fng
+        self.consensus = consensus
+
+    def analysts(self, ticker):
+        if self.consensus is None:
+            return {"recommendation": 2.0, "analysts": 20, "upside": 0.10, "label": "buy"}
+        return self.consensus.get(ticker)
 
     def history(self, ticker):
         return self.histories.get(ticker)
@@ -162,8 +168,28 @@ class FakeClient:
                               "executed_at": datetime.now(timezone.utc).isoformat(), "to_euro_rate": "1"}}
 
 
+CRYPTO_ASSETS = [
+    {"key": "BTC", "name": "Bitcoin", "symbol": "BTC", "yahoo": "BTC-EUR", "sleeve": "crypto", "core": True},
+    {"key": "ETH", "name": "Ethereum", "symbol": "ETH", "yahoo": "ETH-EUR", "sleeve": "crypto"},
+]
+
+
 @pytest.fixture
 def cfg():
+    """Configuration générique à trois poches (avec crypto) pour éprouver le moteur."""
+    c = load_config(ROOT / "config.yaml", env={})
+    c["agent"]["enabled"] = False
+    c["signals"]["analysts"]["enabled"] = False
+    c["risk"]["max_theme_pct"] = 1.0
+    c["allocation"].update(etf=0.6, actions=0.2, crypto=0.2)
+    c["allocation"]["max"] = {"etf": 1.0, "actions": 0.30, "crypto": 0.25}
+    c["universe"] = c["universe"] + [dict(a) for a in CRYPTO_ASSETS]
+    return c
+
+
+@pytest.fixture
+def cfg_real():
+    """La configuration telle qu'elle est livrée (sans crypto, filtre analystes, plafonds par thème)."""
     c = load_config(ROOT / "config.yaml", env={})
     c["agent"]["enabled"] = False
     return c

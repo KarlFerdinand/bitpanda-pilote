@@ -41,6 +41,8 @@ DEFAULTS: dict = {
         "rsi_hot": 75,
         "momentum_windows": [21, 63, 126],
         "risk_adjusted": ["actions"],
+        "analysts": {"enabled": True, "max_recommendation": 2.5, "min_analysts": 5,
+                     "min_upside": 0.0, "upside_weight": 0.5},
         "pullback_pct": 0.08,
         "top_n": {"etf": 2, "actions": 2, "crypto": 1},
         "vix_fear": 28,
@@ -60,6 +62,7 @@ DEFAULTS: dict = {
     },
     "risk": {
         "max_position_pct": {"etf": 0.40, "actions": 0.08, "crypto": 0.40},
+        "max_theme_pct": 0.15,
         "caps_min_portfolio_eur": 300.0,
     },
     "execution": {

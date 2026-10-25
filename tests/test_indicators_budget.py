@@ -53,9 +53,12 @@ def test_iso_week_helpers():
     assert weeks_between("2025-W52", "2026-W02") == 2
 
 
-def test_config_validation(cfg):
-    sleeves = [a["sleeve"] for a in cfg["universe"]]
-    assert sleeves.count("etf") == 8 and sleeves.count("actions") == 20 and sleeves.count("crypto") == 2
+def test_config_validation(cfg, cfg_real):
+    sleeves = [a["sleeve"] for a in cfg_real["universe"]]
+    assert sleeves.count("etf") == 8 and sleeves.count("actions") == 29 and sleeves.count("crypto") == 0
+    assert cfg_real["allocation"]["crypto"] == 0 and cfg_real["allocation"]["etf"] == 0.7
+    themes = {a["theme"] for a in cfg_real["universe"] if a["sleeve"] == "actions"}
+    assert themes == {"ia", "tech", "luxe", "pharma", "opportunites"}
     stock = next(a for a in cfg["universe"] if a["sleeve"] == "actions")
     with pytest.raises(ConfigError, match="socle"):
         validate(dict(cfg, universe=[dict(stock, core=True)] + cfg["universe"][1:]))

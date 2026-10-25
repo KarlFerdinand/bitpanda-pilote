@@ -33,6 +33,7 @@ class RunReport:
     notes: list = field(default_factory=list)
     ledger_note: str | None = None
     account_note: str | None = None
+    analysts: dict = field(default_factory=dict)
     reserve: float = 0.0
     spent_week: float = 0.0
     weekly: float = 0.0
@@ -51,6 +52,15 @@ class RunReport:
     error: str | None = None
 
     # ------------------------------------------------------------------
+    def _consensus(self, key: str) -> str:
+        c = self.analysts.get(key)
+        if not c:
+            return ""
+        txt = f"{c['recommendation']:.1f}/5 · {c['analysts']} analystes".replace(".", ",")
+        if c.get("upside") is not None:
+            txt += f" · objectif {pct(c['upside'])}"
+        return txt
+
     def headline(self) -> str:
         buys = [f for o, f in self.executed if o.side == "BUY"]
         sells = [f for o, f in self.executed if o.side == "SELL"]
@@ -135,14 +145,14 @@ class RunReport:
 
         if self.signals:
             L += ["## Signaux du jour", "",
-                  "| Poche | Actif | Prix | Tendance | RSI | Momentum (1-6 mois) | Recul 3 mois |",
-                  "|---|---|---:|---|---:|---:|---:|"]
+                  "| Poche | Actif | Prix | Tendance | RSI | Momentum (1-6 mois) | Recul 3 mois | Analystes |",
+                  "|---|---|---:|---|---:|---:|---:|---|"]
             order = {"etf": 0, "actions": 1, "crypto": 2}
             labels = {"etf": "ETF", "actions": "Actions", "crypto": "Crypto"}
             for s in sorted(self.signals, key=lambda s: (order.get(s.sleeve, 9), -s.momentum)):
                 trend = "↗ haussière" if s.trend_up else ("→ neutre" if s.above_long else "↘ baissière")
                 L.append(f"| {labels.get(s.sleeve, s.sleeve)} | {names.get(s.key, s.key)} | {eur(s.price)} | {trend} | {s.rsi:.0f} | "
-                         f"{pct(s.momentum)} | {pct(s.drawdown)} |")
+                         f"{pct(s.momentum)} | {pct(s.drawdown)} | {self._consensus(s.key)} |")
             L.append("")
 
         if self.kid_links:

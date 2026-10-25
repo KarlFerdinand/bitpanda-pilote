@@ -44,6 +44,7 @@ class MarketContext:
     veto: set = field(default_factory=set)
     agent_summary: str = ""
     agent_sources: list = field(default_factory=list)
+    analysts: dict = field(default_factory=dict)   # clé → consensus des analystes (actions)
 
 
 @dataclass
@@ -235,7 +236,7 @@ def _split_amount(amount: float, cands: list, min_order: float) -> list[float] |
     return parts if min(parts) >= min_order else None
 
 
-def score_of(sig: Signal, sleeve: str, p: dict) -> float:
+def score_of(sig: Signal, sleeve: str, p: dict, consensus: dict | None = None) -> float:
     risk_adjusted = sleeve in (p.get("risk_adjusted") or [])
     score = sig.momentum / max(sig.volatility, 0.10) if risk_adjusted else sig.momentum
     bonus = 0.1 if risk_adjusted else 0.03
@@ -243,7 +244,22 @@ def score_of(sig: Signal, sleeve: str, p: dict) -> float:
         score += bonus
     if sig.is_hot(p["rsi_hot"]):
         score -= bonus
+    if consensus and consensus.get("upside") is not None:
+        upside = max(0.0, min(0.5, float(consensus["upside"])))
+        score += float((p.get("analysts") or {}).get("upside_weight", 0.5)) * upside
     return score
+
+
+def analysts_ok(consensus: dict | None, p: dict) -> bool:
+    a = p.get("analysts") or {}
+    if not consensus:
+        return False
+    if consensus.get("analysts", 0) < int(a.get("min_analysts", 5)):
+        return False
+    if consensus.get("recommendation", 5) > float(a.get("max_recommendation", 2.5)):
+        return False
+    upside = consensus.get("upside")
+    return upside is None or upside >= float(a.get("min_upside", 0.0))
 
 
 def pick_assets(sleeve: str, amount: float, signals: dict, assets: dict, market: MarketContext,
@@ -255,15 +271,42 @@ def pick_assets(sleeve: str, amount: float, signals: dict, assets: dict, market:
     risk = cfg["risk"]
     cap = sleeve_value(risk["max_position_pct"], sleeve, 0.4)
 
-    cands = []
+    use_analysts = sleeve == "actions" and (p.get("analysts") or {}).get("enabled", False)
+    cands, rejected = [], []
     for key, asset in assets.items():
         if asset["sleeve"] != sleeve:
             continue
         sig = signals.get(key)
         if sig is None or not tradeable(key, "BUY") or key in market.veto or not sig.trend_up:
             continue
-        cands.append((score_of(sig, sleeve, p), asset, sig))
+        consensus = market.analysts.get(key) if use_analysts else None
+        if use_analysts and not analysts_ok(consensus, p):
+            rejected.append(asset["name"])
+            continue
+        cands.append((score_of(sig, sleeve, p, consensus), asset, sig))
     cands.sort(key=lambda c: c[0], reverse=True)
+    if rejected:
+        notes.append("en tendance mais écartées par le consensus des analystes (ou consensus indisponible) : "
+                     + ", ".join(rejected))
+
+    if sleeve == "actions" and total >= float(risk["caps_min_portfolio_eur"]):
+        max_theme = float(risk.get("max_theme_pct", 1.0))
+        theme_of = {k: a.get("theme", "autre") for k, a in assets.items() if a["sleeve"] == "actions"}
+        theme_value: dict[str, float] = {}
+        for k, v in values.items():
+            if k in theme_of:
+                theme_value[theme_of[k]] = theme_value.get(theme_of[k], 0.0) + v
+        kept, full = [], set()
+        for score, asset, sig in cands:
+            th = theme_of.get(asset["key"], "autre")
+            share = amount / max(1, min(len(cands), top_n))
+            if (theme_value.get(th, 0.0) + share) / (total + amount) > max_theme:
+                full.add(th)
+                continue
+            kept.append((score, asset, sig))
+        cands = kept
+        if full:
+            notes.append(f"thème(s) déjà à {max_theme:.0%} du portefeuille, pas de nouvel achat : " + ", ".join(sorted(full)))
 
     if total >= float(risk["caps_min_portfolio_eur"]):
         kept = []
@@ -304,6 +347,12 @@ def pick_assets(sleeve: str, amount: float, signals: dict, assets: dict, market:
             bits = [_fr(f"momentum {sig.momentum:+.1%}"), "tendance haussière"]
             if sig.is_dip(p["rsi_dip"]):
                 bits.append(f"repli RSI {sig.rsi:.0f}")
+            consensus = market.analysts.get(asset["key"])
+            if sleeve == "actions" and consensus:
+                txt = f"analystes {consensus['recommendation']:.1f}/5 ({consensus['analysts']})"
+                if consensus.get("upside") is not None:
+                    txt += f", objectif {consensus['upside']:+.0%}"
+                bits.append(_fr(txt))
             reason = ", ".join(bits)
         orders.append(Order("BUY", asset["key"], sleeve, amount_eur=part, reason=reason))
     return orders
@@ -348,6 +397,9 @@ def build_plan(today: date, cfg: dict, assets: dict, signals: dict, holdings: di
 
     multipliers, reasons = {}, {}
     for s in SLEEVES:
+        if float(cfg["allocation"].get(s, 0.0)) <= 0:
+            pending[s] = 0.0  # poche à 0 % : ni provision ni achat
+            continue
         ref_sleeve = MARKET_REFERENCE.get(s, s)
         core = core_of(assets, ref_sleeve)
         ref = signals.get(core["key"]) if core else None
@@ -358,7 +410,7 @@ def build_plan(today: date, cfg: dict, assets: dict, signals: dict, holdings: di
     # 1) provision du jour
     base_daily = weekly / WEEKDAYS
     for s in SLEEVES:
-        pending[s] += base_daily * split[s] * multipliers[s]
+        pending[s] += base_daily * split[s] * multipliers.get(s, 0.0)
     total_pending = sum(pending.values())
     if total_pending > reserve > 0:
         ratio = reserve / total_pending

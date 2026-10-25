@@ -21,15 +21,17 @@ budget:
   max_daily_pct_of_weekly: 1.0  # au plus 1 semaine de budget dépensée sur une seule journée
   min_order_eur: 10             # en dessous, le bot attend d'avoir accumulé assez
 
-# Trois poches. Le total doit faire 1.
+# Poches. Le total doit faire 1.
+# Choix du 26/10/2026 : plus aucun achat de crypto. Tes cryptos existantes ne sont jamais
+# vendues par le bot ; elles restent simplement comptées dans le total de ton compte.
 allocation:
-  etf: 0.60                     # 60 % ETF (le cœur diversifié)
-  actions: 0.20                 # 20 % actions individuelles
-  crypto: 0.20                  # 20 % cryptos majeures
+  etf: 0.70                     # 70 % ETF solides (le cœur diversifié)
+  actions: 0.30                 # 30 % actions : IA, luxe, pharma, tech, opportunités
+  crypto: 0.0                   # 0 % : aucun achat crypto
   max:                          # plafonds durs : au-delà, plus aucun achat dans la poche
     etf: 1.0
-    actions: 0.30
-    crypto: 0.25
+    actions: 0.40
+    crypto: 0.0
   rebalance_band: 0.05          # tolérance avant de réorienter les achats
   scope: account                # account = répartir en tenant compte de TOUT ton compte Bitpanda
                                 # (lecture seule, rien n'est vendu) ; bot = seulement ce que le bot achète
@@ -43,6 +45,12 @@ signals:
   momentum_windows: [21, 63, 126]   # ~1, 3 et 6 mois
   risk_adjusted: [actions]      # poches classées par momentum ÷ volatilité (évite de ne
                                 # choisir que les titres les plus nerveux)
+  analysts:                     # consensus des analystes (source : Yahoo Finance), poche actions
+    enabled: true
+    max_recommendation: 2.5     # échelle 1 = achat fort … 5 = vente ; au-delà de 2,5, pas d'achat
+    min_analysts: 5             # au moins 5 analystes suivent la valeur
+    min_upside: 0.0             # objectif de cours moyen au-dessus du cours actuel
+    upside_weight: 0.5          # petit bonus de classement selon le potentiel annoncé
   pullback_pct: 0.08            # recul depuis le plus haut 3 mois jugé « opportunité »
   top_n:                        # nb max de lignes achetées le même jour
     etf: 2
@@ -71,6 +79,7 @@ risk:
     etf: 0.40
     actions: 0.08               # une action seule ne dépasse pas 8 % du portefeuille
     crypto: 0.40
+  max_theme_pct: 0.15           # un thème d'actions (IA, luxe…) ne dépasse pas 15 % du portefeuille
   caps_min_portfolio_eur: 300   # plafonds appliqués à partir de 300 € investis
 
 execution:
@@ -95,7 +104,7 @@ agent:                          # veille d'actualité par Claude (optionnelle)
 #  cryptos) et ignore ceux qui ne le sont pas.
 #  yahoo    = code utilisé pour lire l'historique des cours
 #  currency = devise de cotation sur Yahoo (converti en euros par le bot)
-#  Pour ajouter une action : même format, avec son ISIN et son code Yahoo.
+#  Pour ajouter une action : même format, avec son ISIN, son code Yahoo et son thème.
 # ---------------------------------------------------------------------
 universe:
   # --- ETF ------------------------------------------------------------
@@ -141,39 +150,43 @@ universe:
     yahoo: 4GLD.DE
     sleeve: etf
 
-  # --- Actions : grandes valeurs liquides, États-Unis ------------------
-  - {key: AAPL,  name: Apple,          isin: US0378331005, yahoo: AAPL,  currency: USD, sleeve: actions}
-  - {key: MSFT,  name: Microsoft,      isin: US5949181045, yahoo: MSFT,  currency: USD, sleeve: actions}
-  - {key: NVDA,  name: NVIDIA,         isin: US67066G1040, yahoo: NVDA,  currency: USD, sleeve: actions}
-  - {key: GOOGL, name: Alphabet,       isin: US02079K3059, yahoo: GOOGL, currency: USD, sleeve: actions}
-  - {key: AMZN,  name: Amazon,         isin: US0231351067, yahoo: AMZN,  currency: USD, sleeve: actions}
-  - {key: META,  name: Meta Platforms, isin: US30303M1027, yahoo: META,  currency: USD, sleeve: actions}
-  - {key: AVGO,  name: Broadcom,       isin: US11135F1012, yahoo: AVGO,  currency: USD, sleeve: actions}
-  - {key: LLY,   name: Eli Lilly,      isin: US5324571083, yahoo: LLY,   currency: USD, sleeve: actions}
-  - {key: JPM,   name: JPMorgan Chase, isin: US46625H1005, yahoo: JPM,   currency: USD, sleeve: actions}
-  - {key: V,     name: Visa,           isin: US92826C8394, yahoo: V,     currency: USD, sleeve: actions}
+  # --- Actions par thème -------------------------------------------
+  # theme : ia, tech, luxe, pharma, opportunites (plafond par thème : risk.max_theme_pct)
+  # IA
+  - {key: NVDA,  name: NVIDIA,          isin: US67066G1040, yahoo: NVDA,    currency: USD, sleeve: actions, theme: ia}
+  - {key: MSFT,  name: Microsoft,       isin: US5949181045, yahoo: MSFT,    currency: USD, sleeve: actions, theme: ia}
+  - {key: GOOGL, name: Alphabet,        isin: US02079K3059, yahoo: GOOGL,   currency: USD, sleeve: actions, theme: ia}
+  - {key: META,  name: Meta Platforms,  isin: US30303M1027, yahoo: META,    currency: USD, sleeve: actions, theme: ia}
+  - {key: AVGO,  name: Broadcom,        isin: US11135F1012, yahoo: AVGO,    currency: USD, sleeve: actions, theme: ia}
+  - {key: TSM,   name: TSMC,            isin: US8740391003, yahoo: TSM,     currency: USD, sleeve: actions, theme: ia}
+  - {key: AMD,   name: AMD,             isin: US0079031078, yahoo: AMD,     currency: USD, sleeve: actions, theme: ia}
+  - {key: PLTR,  name: Palantir,        isin: US69608A1088, yahoo: PLTR,    currency: USD, sleeve: actions, theme: ia}
+  - {key: ASML,  name: ASML,            isin: NL0010273215, yahoo: ASML.AS,                sleeve: actions, theme: ia}
+  # Tech
+  - {key: AAPL,  name: Apple,           isin: US0378331005, yahoo: AAPL,    currency: USD, sleeve: actions, theme: tech}
+  - {key: AMZN,  name: Amazon,          isin: US0231351067, yahoo: AMZN,    currency: USD, sleeve: actions, theme: tech}
+  - {key: SAP,   name: SAP,             isin: DE0007164600, yahoo: SAP.DE,                 sleeve: actions, theme: tech}
+  - {key: SPOT,  name: Spotify,         isin: LU1778762911, yahoo: SPOT,    currency: USD, sleeve: actions, theme: tech}
+  # Luxe
+  - {key: LVMH,  name: LVMH,            isin: FR0000121014, yahoo: MC.PA,                  sleeve: actions, theme: luxe}
+  - {key: RMS,   name: Hermès,          isin: FR0000052292, yahoo: RMS.PA,                 sleeve: actions, theme: luxe}
+  - {key: OR,    name: L'Oréal,         isin: FR0000120321, yahoo: OR.PA,                  sleeve: actions, theme: luxe}
+  - {key: CFR,   name: Richemont,       isin: CH0210483332, yahoo: CFR.SW,  currency: CHF, sleeve: actions, theme: luxe}
+  - {key: RACE,  name: Ferrari,         isin: NL0011585146, yahoo: RACE.MI,                sleeve: actions, theme: luxe}
+  # Pharma
+  - {key: LLY,   name: Eli Lilly,       isin: US5324571083, yahoo: LLY,     currency: USD, sleeve: actions, theme: pharma}
+  - {key: NOVO,  name: Novo Nordisk,    isin: DK0062498333, yahoo: NOVO-B.CO, currency: DKK, sleeve: actions, theme: pharma}
+  - {key: SAN,   name: Sanofi,          isin: FR0000120578, yahoo: SAN.PA,                 sleeve: actions, theme: pharma}
+  - {key: NOVN,  name: Novartis,        isin: CH0012005267, yahoo: NOVN.SW, currency: CHF, sleeve: actions, theme: pharma}
+  - {key: JNJ,   name: Johnson & Johnson, isin: US4781601046, yahoo: JNJ,   currency: USD, sleeve: actions, theme: pharma}
+  # Opportunités (grandes valeurs hors thèmes, retenues seulement si elles sont fortes)
+  - {key: SU,    name: Schneider Electric, isin: FR0000121972, yahoo: SU.PA,               sleeve: actions, theme: opportunites}
+  - {key: AIR,   name: Airbus,          isin: NL0000235190, yahoo: AIR.PA,                 sleeve: actions, theme: opportunites}
+  - {key: SAF,   name: Safran,          isin: FR0000073272, yahoo: SAF.PA,                 sleeve: actions, theme: opportunites}
+  - {key: HO,    name: Thales,          isin: FR0000121329, yahoo: HO.PA,                  sleeve: actions, theme: opportunites}
+  - {key: V,     name: Visa,            isin: US92826C8394, yahoo: V,       currency: USD, sleeve: actions, theme: opportunites}
+  - {key: JPM,   name: JPMorgan Chase,  isin: US46625H1005, yahoo: JPM,     currency: USD, sleeve: actions, theme: opportunites}
 
-  # --- Actions : grandes valeurs liquides, Europe ----------------------
-  - {key: ASML,  name: ASML,               isin: NL0010273215, yahoo: ASML.AS, sleeve: actions}
-  - {key: SAP,   name: SAP,                isin: DE0007164600, yahoo: SAP.DE,  sleeve: actions}
-  - {key: LVMH,  name: LVMH,               isin: FR0000121014, yahoo: MC.PA,   sleeve: actions}
-  - {key: SU,    name: Schneider Electric, isin: FR0000121972, yahoo: SU.PA,   sleeve: actions}
-  - {key: AIR,   name: Airbus,             isin: NL0000235190, yahoo: AIR.PA,  sleeve: actions}
-  - {key: SIE,   name: Siemens,            isin: DE0007236101, yahoo: SIE.DE,  sleeve: actions}
-  - {key: ALV,   name: Allianz,            isin: DE0008404005, yahoo: ALV.DE,  sleeve: actions}
-  - {key: TTE,   name: TotalEnergies,      isin: FR0000120271, yahoo: TTE.PA,  sleeve: actions}
-  - {key: OR,    name: L'Oréal,            isin: FR0000120321, yahoo: OR.PA,   sleeve: actions}
-  - {key: SAF,   name: Safran,             isin: FR0000073272, yahoo: SAF.PA,  sleeve: actions}
-
-  # --- Cryptos majeures ------------------------------------------------
-  - key: BTC
-    name: Bitcoin
-    symbol: BTC
-    yahoo: BTC-EUR
-    sleeve: crypto
-    core: true
-  - key: ETH
-    name: Ethereum
-    symbol: ETH
-    yahoo: ETH-EUR
-    sleeve: crypto
+  # --- Crypto ---------------------------------------------------------
+  # Aucune : tu as choisi de ne plus investir en crypto. Pour revenir en arrière, remets
+  # BTC (symbol: BTC, yahoo: BTC-EUR, sleeve: crypto, core: true) et une allocation crypto > 0.

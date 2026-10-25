@@ -102,6 +102,13 @@ def _execute(cfg, env, report, state, data, client, agent_fetch, today):
         crypto_fng=data.crypto_fear_greed() if any(a["sleeve"] == "crypto" for a in cfg["universe"]) else None,
     )
     report.vix, report.fng = market.vix, market.crypto_fng
+    if cfg["signals"].get("analysts", {}).get("enabled") and hasattr(data, "analysts"):
+        for a in cfg["universe"]:
+            if a["sleeve"] == "actions" and a["key"] in signals and signals[a["key"]].trend_up:
+                consensus = data.analysts(a["yahoo"])
+                if consensus:
+                    market.analysts[a["key"]] = consensus
+        report.analysts = market.analysts
     report.signals = list(signals.values())
 
     # 2) Courtier

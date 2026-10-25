@@ -65,6 +65,25 @@ class MarketData:
             return None
         return to_eur(prices, fx)
 
+    def analysts(self, ticker: str) -> dict | None:
+        """Consensus des analystes publié par Yahoo Finance : note moyenne (1 achat fort … 5 vente),
+        nombre d'analystes, objectif de cours moyen et potentiel par rapport au cours actuel."""
+        try:
+            import yfinance as yf
+
+            info = yf.Ticker(ticker).info or {}
+        except Exception as exc:
+            log.warning("Consensus des analystes indisponible pour %s : %s", ticker, exc)
+            return None
+        reco, n = info.get("recommendationMean"), info.get("numberOfAnalystOpinions")
+        target = info.get("targetMeanPrice")
+        price = info.get("currentPrice") or info.get("regularMarketPrice")
+        if reco is None or not n:
+            return None
+        upside = (float(target) / float(price) - 1) if target and price else None
+        return {"recommendation": float(reco), "analysts": int(n), "upside": upside,
+                "label": info.get("recommendationKey") or ""}
+
     def vix(self) -> float | None:
         s = self.history("^VIX")
         return float(s.iloc[-1]) if s is not None else None

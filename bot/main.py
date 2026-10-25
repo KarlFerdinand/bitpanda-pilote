@@ -22,7 +22,7 @@ from .budget import Ledger
 from .config import ROOT, ConfigError, assets_by_key, load_config
 from .data import MarketData
 from .indicators import compute_signal
-from .report import JOURNAL_DIR, RunReport, append_trades, eur, write_journal
+from .report import JOURNAL_DIR, RunReport, append_trades, eur, write_journal, write_summary
 from .state import load_state, save_state
 from .strategy import Holding, MarketContext, build_plan
 
@@ -284,6 +284,7 @@ def run(cfg: dict, env: dict | None = None, *, data=None, client=None, agent_fet
         names = {k: a["name"] for k, a in assets.items()}
         path = write_journal(report, names, journal_base)
         append_trades(report, assets, journal_base)
+        write_summary(report, names, journal_base)
         _github_summary(path.read_text(encoding="utf-8"))
         _notify(report)
     return report

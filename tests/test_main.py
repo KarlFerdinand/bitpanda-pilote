@@ -172,3 +172,13 @@ def test_second_run_same_day_does_nothing(cfg, tmp_path):
     first = run_days(cfg, tmp_path, d, 1)[0]
     second = run_days(cfg, tmp_path, d, 1)[0]
     assert first.executed and not second.executed and "déjà tourné" in second.notes[-1]
+
+
+def test_summary_and_history_written(cfg, tmp_path):
+    import json
+    run_days(cfg, tmp_path, date(2026, 10, 26), 3)
+    folder = tmp_path / "journal" / "paper"
+    s = json.loads((folder / "resume.json").read_text())
+    assert s["date"] == "2026-10-28" and "coefficients" in s and s["valeur_eur"] >= 0
+    lines = (folder / "historique.csv").read_text().splitlines()
+    assert lines[0].startswith("date;valeur_eur") and len(lines) == 4

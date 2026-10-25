@@ -191,3 +191,37 @@ def append_trades(report: RunReport, assets: dict, base: Path | None = None) -> 
                         a.get("name", ""), a.get("isin") or a.get("symbol", ""), f"{f.quantity:.8f}",
                         f"{f.price:.4f}", f"{f.notional:.2f}", f"{f.fee:.2f}", f.trade_id, o.reason])
     return path
+
+
+def write_summary(report: RunReport, names: dict, base: Path | None = None) -> Path:
+    """Résumé machine (resume.json) + historique quotidien (historique.csv), lus par la newsletter."""
+    import json
+
+    folder = (base or JOURNAL_DIR) / report.mode
+    folder.mkdir(parents=True, exist_ok=True)
+    value = round(sum(p["value"] for p in report.positions), 2)
+    cost = round(sum(p["cost"] for p in report.positions if p["cost"]), 2)
+    hist = folder / "historique.csv"
+    rows = []
+    if hist.exists():
+        rows = [l for l in hist.read_text(encoding="utf-8").splitlines()[1:] if l and not l.startswith(report.today.isoformat())]
+    rows.append(f"{report.today.isoformat()};{value:.2f};{cost:.2f};{report.reserve:.2f};{len(report.executed)}")
+    hist.write_text("date;valeur_eur;investi_eur;reserve_eur;ordres\n" + "\n".join(rows) + "\n", encoding="utf-8")
+    summary = {
+        "date": report.today.isoformat(), "mode": report.mode, "erreur": report.error,
+        "valeur_eur": value, "investi_eur": cost, "plus_moins_value_eur": round(value - cost, 2),
+        "reserve_eur": report.reserve, "depense_semaine_eur": report.spent_week, "budget_hebdo_eur": report.weekly,
+        "vix": report.vix, "compte_hors_bot": report.account_note,
+        "coefficients": {s: {"valeur": m, "raisons": report.reasons.get(s, [])} for s, m in report.multipliers.items()},
+        "ordres_du_jour": [{"sens": o.side, "actif": names.get(o.key, o.key), "montant_eur": round(f.notional, 2),
+                            "raison": o.reason} for o, f in report.executed],
+        "positions": [{"actif": p["name"], "valeur_eur": round(p["value"], 2), "cout_eur": round(p["cost"] or 0, 2)}
+                      for p in sorted(report.positions, key=lambda p: -p["value"])],
+        "signaux": [{"actif": names.get(s.key, s.key), "poche": s.sleeve, "tendance": "haussière" if s.trend_up else
+                     ("neutre" if s.above_long else "baissière"), "rsi": round(s.rsi), "momentum": round(s.momentum, 4),
+                     "analystes": report.analysts.get(s.key)} for s in report.signals],
+        "remarques": report.notes,
+    }
+    path = folder / "resume.json"
+    path.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+    return path

@@ -1,0 +1,19 @@
+{
+  "asset_ids": {},
+  "last_run": "2026-10-25",
+  "ledger": {
+    "credited_total": 50.0,
+    "reserve": 50.0,
+    "spent_week": 0.0,
+    "week": "2026-W43"
+  },
+  "paper": {
+    "positions": {}
+  },
+  "pending": {
+    "actions": 2.0,
+    "crypto": 2.0,
+    "etf": 6.0
+  },
+  "positions_meta": {}
+}

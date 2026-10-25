@@ -1,0 +1,60 @@
+name: Bitpanda Pilote
+
+on:
+  schedule:
+    # Du lundi au vendredi à 14h40 UTC = 15h40 à Paris en hiver, 16h40 en été
+    # (bourses européennes et américaines ouvertes en même temps).
+    - cron: "40 14 * * 1-5"
+  workflow_dispatch:
+    inputs:
+      command:
+        description: "run = exécution normale · check = vérifier Bitpanda · set-limit = poser le plafond journalier"
+        type: choice
+        options: [run, check, set-limit]
+        default: run
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bitpanda-pilote
+  cancel-in-progress: false
+
+jobs:
+  bot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Installer les dépendances
+        run: pip install -r requirements.txt
+
+      - name: Tests de sécurité du bot
+        run: python -m pytest -q
+
+      - name: Lancer le bot
+        env:
+          BITPANDA_API_KEY: ${{ secrets.BITPANDA_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          LIVE_TRADING: ${{ vars.LIVE_TRADING }}
+          WEEKLY_BUDGET_EUR: ${{ vars.WEEKLY_BUDGET_EUR }}
+          DAILY_BUY_LIMIT_EUR: ${{ vars.DAILY_BUY_LIMIT_EUR }}
+        run: python -m bot.main "${{ github.event.inputs.command || 'run' }}"
+
+      - name: Enregistrer le journal et l'état
+        if: always()
+        run: |
+          git config user.name "bitpanda-pilote"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state journal
+          if ! git diff --cached --quiet; then
+            git commit -m "Journal du $(TZ=Europe/Paris date +%d/%m/%Y)"
+            git push
+          fi

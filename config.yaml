@@ -144,6 +144,7 @@ universe:
     isin: IE00B3WJKG14
     yahoo: QDVE.DE
     sleeve: etf
+    theme: tech                 # compte dans le plafond du thème tech
   - key: GOLD
     name: Xetra-Gold
     isin: DE000A0S9GB0

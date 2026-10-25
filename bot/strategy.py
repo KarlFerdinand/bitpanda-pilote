@@ -289,16 +289,19 @@ def pick_assets(sleeve: str, amount: float, signals: dict, assets: dict, market:
         notes.append("en tendance mais écartées par le consensus des analystes (ou consensus indisponible) : "
                      + ", ".join(rejected))
 
-    if sleeve == "actions" and total >= float(risk["caps_min_portfolio_eur"]):
+    if total >= float(risk["caps_min_portfolio_eur"]):  # plafond par thème, ETF thématiques compris
         max_theme = float(risk.get("max_theme_pct", 1.0))
-        theme_of = {k: a.get("theme", "autre") for k, a in assets.items() if a["sleeve"] == "actions"}
+        theme_of = {k: a["theme"] for k, a in assets.items() if a.get("theme")}
         theme_value: dict[str, float] = {}
         for k, v in values.items():
             if k in theme_of:
                 theme_value[theme_of[k]] = theme_value.get(theme_of[k], 0.0) + v
         kept, full = [], set()
         for score, asset, sig in cands:
-            th = theme_of.get(asset["key"], "autre")
+            th = theme_of.get(asset["key"])
+            if th is None:
+                kept.append((score, asset, sig))
+                continue
             share = amount / max(1, min(len(cands), top_n))
             if (theme_value.get(th, 0.0) + share) / (total + amount) > max_theme:
                 full.add(th)

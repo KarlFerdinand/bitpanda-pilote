@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-26",
+  "mode": "paper",
+  "erreur": null,
+  "valeur_eur": 0,
+  "investi_eur": 0,
+  "plus_moins_value_eur": 0,
+  "reserve_eur": 0.0,
+  "depense_semaine_eur": 0.0,
+  "budget_hebdo_eur": 50.0,
+  "vix": null,
+  "compte_hors_bot": null,
+  "coefficients": {},
+  "ordres_du_jour": [],
+  "positions": [],
+  "signaux": [],
+  "remarques": [
+    "le bot a déjà tourné aujourd'hui : rien de plus (évite les achats en double)"
+  ]
+}

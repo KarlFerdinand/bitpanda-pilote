@@ -3,3 +3,4 @@ date;mode;sens;cle;nom;isin_ou_symbole;quantite;prix_eur;montant_eur;frais_eur;i
 2026-10-27;paper;ACHAT;US_TECH;iShares S&P 500 Information Technology;IE00B3WJKG14;0.21138730;47.0700;10.00;0.05;paper;momentum +11,6%, tendance haussière
 2026-10-28;paper;ACHAT;US_TECH;iShares S&P 500 Information Technology;IE00B3WJKG14;0.21114058;47.1250;10.00;0.05;paper;momentum +11,1%, tendance haussière
 2026-10-29;paper;ACHAT;US_TECH;iShares S&P 500 Information Technology;IE00B3WJKG14;0.21313055;46.6850;10.00;0.05;paper;momentum +8,3%, tendance haussière
+2026-10-30;paper;ACHAT;SP500;iShares Core S&P 500;IE00B5BMR087;0.01354442;734.6200;10.00;0.05;paper;momentum +3,8%, tendance haussière

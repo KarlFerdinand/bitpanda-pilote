@@ -6,3 +6,4 @@ date;mode;sens;cle;nom;isin_ou_symbole;quantite;prix_eur;montant_eur;frais_eur;i
 2026-10-30;paper;ACHAT;SP500;iShares Core S&P 500;IE00B5BMR087;0.01354442;734.6200;10.00;0.05;paper;momentum +3,8%, tendance haussière
 2026-11-02;paper;ACHAT;SP500;iShares Core S&P 500;IE00B5BMR087;0.01353079;735.3600;10.00;0.05;paper;momentum +3,4%, tendance haussière
 2026-11-03;paper;ACHAT;SP500;iShares Core S&P 500;IE00B5BMR087;0.01362491;730.2800;10.00;0.05;paper;momentum +2,3%, tendance haussière
+2026-11-04;paper;ACHAT;EUROPE600;Amundi Core Stoxx Europe 600;LU0908500753;0.03059655;325.2000;10.00;0.05;paper;momentum +4,4%, tendance haussière

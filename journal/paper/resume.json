@@ -1,20 +1,448 @@
 {
-  "date": "2026-11-10",
+  "date": "2026-11-11",
   "mode": "paper",
   "erreur": null,
-  "valeur_eur": 0,
-  "investi_eur": 0,
-  "plus_moins_value_eur": 0,
-  "reserve_eur": 0.0,
-  "depense_semaine_eur": 0.0,
+  "valeur_eur": 127.57,
+  "investi_eur": 130.0,
+  "plus_moins_value_eur": -2.43,
+  "reserve_eur": 70.0,
+  "depense_semaine_eur": 20.0,
   "budget_hebdo_eur": 50.0,
-  "vix": null,
-  "compte_hors_bot": null,
-  "coefficients": {},
-  "ordres_du_jour": [],
-  "positions": [],
-  "signaux": [],
+  "vix": 17.489999771118164,
+  "compte_hors_bot": "Ton compte Bitpanda hors bot vaut 3 243,83 € (ETF 4%, actions 62%, crypto 34%) : le bot en tient compte pour répartir ses achats, sans jamais le vendre.",
+  "coefficients": {
+    "actions": {
+      "valeur": 1.0,
+      "raisons": [
+        "marché actions (ETF socle) en tendance haussière : rythme normal"
+      ]
+    },
+    "etf": {
+      "valeur": 1.0,
+      "raisons": [
+        "marché actions (ETF socle) en tendance haussière : rythme normal"
+      ]
+    }
+  },
+  "ordres_du_jour": [
+    {
+      "sens": "BUY",
+      "actif": "Amundi Core Stoxx Europe 600",
+      "montant_eur": 10.0,
+      "raison": "momentum +5,0%, tendance haussière"
+    }
+  ],
+  "positions": [
+    {
+      "actif": "Amundi Core Stoxx Europe 600",
+      "valeur_eur": 50.42,
+      "cout_eur": 50.0
+    },
+    {
+      "actif": "iShares S&P 500 Information Technology",
+      "valeur_eur": 47.01,
+      "cout_eur": 50.0
+    },
+    {
+      "actif": "iShares Core S&P 500",
+      "valeur_eur": 30.14,
+      "cout_eur": 30.0
+    }
+  ],
+  "signaux": [
+    {
+      "actif": "iShares Core MSCI World",
+      "poche": "etf",
+      "tendance": "haussière",
+      "rsi": 55,
+      "momentum": 0.033,
+      "analystes": null
+    },
+    {
+      "actif": "iShares Core S&P 500",
+      "poche": "etf",
+      "tendance": "haussière",
+      "rsi": 54,
+      "momentum": 0.0321,
+      "analystes": null
+    },
+    {
+      "actif": "iShares Nasdaq 100",
+      "poche": "etf",
+      "tendance": "haussière",
+      "rsi": 48,
+      "momentum": -0.0099,
+      "analystes": null
+    },
+    {
+      "actif": "Amundi Core Stoxx Europe 600",
+      "poche": "etf",
+      "tendance": "haussière",
+      "rsi": 64,
+      "momentum": 0.0496,
+      "analystes": null
+    },
+    {
+      "actif": "iShares Core MSCI EM IMI",
+      "poche": "etf",
+      "tendance": "haussière",
+      "rsi": 51,
+      "momentum": -0.0141,
+      "analystes": null
+    },
+    {
+      "actif": "iShares MSCI World Small Cap",
+      "poche": "etf",
+      "tendance": "haussière",
+      "rsi": 60,
+      "momentum": 0.0384,
+      "analystes": null
+    },
+    {
+      "actif": "iShares S&P 500 Information Technology",
+      "poche": "etf",
+      "tendance": "haussière",
+      "rsi": 43,
+      "momentum": -0.0153,
+      "analystes": null
+    },
+    {
+      "actif": "Xetra-Gold",
+      "poche": "etf",
+      "tendance": "baissière",
+      "rsi": 47,
+      "momentum": -0.0495,
+      "analystes": null
+    },
+    {
+      "actif": "NVIDIA",
+      "poche": "actions",
+      "tendance": "baissière",
+      "rsi": 31,
+      "momentum": -0.2056,
+      "analystes": null
+    },
+    {
+      "actif": "Microsoft",
+      "poche": "actions",
+      "tendance": "haussière",
+      "rsi": 50,
+      "momentum": 0.1411,
+      "analystes": {
+        "recommendation": 1.37931,
+        "analysts": 54,
+        "upside": 0.22067502038858233,
+        "label": "strong_buy"
+      }
+    },
+    {
+      "actif": "Alphabet",
+      "poche": "actions",
+      "tendance": "baissière",
+      "rsi": 42,
+      "momentum": -0.1706,
+      "analystes": null
+    },
+    {
+      "actif": "Meta Platforms",
+      "poche": "actions",
+      "tendance": "haussière",
+      "rsi": 46,
+      "momentum": 0.0033,
+      "analystes": {
+        "recommendation": 1.40984,
+        "analysts": 57,
+        "upside": 0.3520086836204017,
+        "label": "strong_buy"
+      }
+    },
+    {
+      "actif": "Broadcom",
+      "poche": "actions",
+      "tendance": "baissière",
+      "rsi": 55,
+      "momentum": -0.096,
+      "analystes": null
+    },
+    {
+      "actif": "TSMC",
+      "poche": "actions",
+      "tendance": "haussière",
+      "rsi": 51,
+      "momentum": 0.0116,
+      "analystes": {
+        "recommendation": 1.33333,
+        "analysts": 20,
+        "upside": 0.4193613160759646,
+        "label": "strong_buy"
+      }
+    },
+    {
+      "actif": "AMD",
+      "poche": "actions",
+      "tendance": "haussière",
+      "rsi": 54,
+      "momentum": 0.1406,
+      "analystes": {
+        "recommendation": 1.39623,
+        "analysts": 48,
+        "upside": 0.1891616928920239,
+        "label": "strong_buy"
+      }
+    },
+    {
+      "actif": "Palantir",
+      "poche": "actions",
+      "tendance": "haussière",
+      "rsi": 44,
+      "momentum": 0.0784,
+      "analystes": {
+        "recommendation": 1.84848,
+        "analysts": 28,
+        "upside": 0.2891738399071926,
+        "label": "buy"
+      }
+    },
+    {
+      "actif": "ASML",
+      "poche": "actions",
+      "tendance": "haussière",
+      "rsi": 47,
+      "momentum": -0.0174,
+      "analystes": {
+        "recommendation": 1.36585,
+        "analysts": 33,
+        "upside": 0.49304708647955553,
+        "label": "strong_buy"
+      }
+    },
+    {
+      "actif": "Apple",
+      "poche": "actions",
+      "tendance": "haussière",
+      "rsi": 62,
+      "momentum": 0.1732,
+      "analystes": {
+        "recommendation": 2.22222,
+        "analysts": 40,
+        "upside": -0.030971796530101514,
+        "label": "buy"
+      }
+    },
+    {
+      "actif": "Amazon",
+      "poche": "actions",
+      "tendance": "haussière",
+      "rsi": 60,
+      "momentum": 0.0406,
+      "analystes": {
+        "recommendation": 1.32787,
+        "analysts": 59,
+        "upside": 0.22850122102415726,
+        "label": "strong_buy"
+      }
+    },
+    {
+      "actif": "SAP",
+      "poche": "actions",
+      "tendance": "haussière",
+      "rsi": 59,
+      "momentum": 0.1955,
+      "analystes": {
+        "recommendation": 1.55172,
+        "analysts": 27,
+        "upside": 0.1536242711543021,
+        "label": "buy"
+      }
+    },
+    {
+      "actif": "Spotify",
+      "poche": "actions",
+      "tendance": "haussière",
+      "rsi": 64,
+      "momentum": 0.3095,
+      "analystes": {
+        "recommendation": 1.70732,
+        "analysts": 38,
+        "upside": 0.05148437089571822,
+        "label": "buy"
+      }
+    },
+    {
+      "actif": "LVMH",
+      "poche": "actions",
+      "tendance": "baissière",
+      "rsi": 54,
+      "momentum": -0.0662,
+      "analystes": null
+    },
+    {
+      "actif": "Hermès",
+      "poche": "actions",
+      "tendance": "baissière",
+      "rsi": 54,
+      "momentum": -0.0817,
+      "analystes": null
+    },
+    {
+      "actif": "L'Oréal",
+      "poche": "actions",
+      "tendance": "haussière",
+      "rsi": 67,
+      "momentum": 0.1937,
+      "analystes": {
+        "recommendation": 2.125,
+        "analysts": 24,
+        "upside": -0.020765700212694416,
+        "label": "buy"
+      }
+    },
+    {
+      "actif": "Richemont",
+      "poche": "actions",
+      "tendance": "haussière",
+      "rsi": 61,
+      "momentum": 0.0486,
+      "analystes": {
+        "recommendation": 1.88462,
+        "analysts": 26,
+        "upside": 0.17260824097755068,
+        "label": "buy"
+      }
+    },
+    {
+      "actif": "Ferrari",
+      "poche": "actions",
+      "tendance": "haussière",
+      "rsi": 63,
+      "momentum": 0.1438,
+      "analystes": {
+        "recommendation": 1.83333,
+        "analysts": 18,
+        "upside": 0.06485550672526319,
+        "label": "buy"
+      }
+    },
+    {
+      "actif": "Eli Lilly",
+      "poche": "actions",
+      "tendance": "haussière",
+      "rsi": 72,
+      "momentum": 0.3264,
+      "analystes": {
+        "recommendation": 1.6129,
+        "analysts": 29,
+        "upside": 0.01120956800645656,
+        "label": "buy"
+      }
+    },
+    {
+      "actif": "Novo Nordisk",
+      "poche": "actions",
+      "tendance": "baissière",
+      "rsi": 56,
+      "momentum": -0.03,
+      "analystes": null
+    },
+    {
+      "actif": "Sanofi",
+      "poche": "actions",
+      "tendance": "neutre",
+      "rsi": 81,
+      "momentum": 0.1743,
+      "analystes": null
+    },
+    {
+      "actif": "Novartis",
+      "poche": "actions",
+      "tendance": "haussière",
+      "rsi": 62,
+      "momentum": 0.1146,
+      "analystes": {
+        "recommendation": 2.78261,
+        "analysts": 22,
+        "upside": -0.032516573753201716,
+        "label": "hold"
+      }
+    },
+    {
+      "actif": "Johnson & Johnson",
+      "poche": "actions",
+      "tendance": "haussière",
+      "rsi": 63,
+      "momentum": 0.1847,
+      "analystes": {
+        "recommendation": 1.91304,
+        "analysts": 22,
+        "upside": -0.0035694162119753736,
+        "label": "buy"
+      }
+    },
+    {
+      "actif": "Schneider Electric",
+      "poche": "actions",
+      "tendance": "baissière",
+      "rsi": 46,
+      "momentum": -0.1145,
+      "analystes": null
+    },
+    {
+      "actif": "Airbus",
+      "poche": "actions",
+      "tendance": "haussière",
+      "rsi": 67,
+      "momentum": 0.118,
+      "analystes": {
+        "recommendation": 1.79167,
+        "analysts": 24,
+        "upside": 0.09891632653061233,
+        "label": "buy"
+      }
+    },
+    {
+      "actif": "Safran",
+      "poche": "actions",
+      "tendance": "baissière",
+      "rsi": 57,
+      "momentum": 0.0061,
+      "analystes": null
+    },
+    {
+      "actif": "Thales",
+      "poche": "actions",
+      "tendance": "baissière",
+      "rsi": 51,
+      "momentum": -0.0288,
+      "analystes": null
+    },
+    {
+      "actif": "Visa",
+      "poche": "actions",
+      "tendance": "haussière",
+      "rsi": 67,
+      "momentum": 0.2356,
+      "analystes": {
+        "recommendation": 1.5,
+        "analysts": 37,
+        "upside": 0.05525632710609796,
+        "label": "strong_buy"
+      }
+    },
+    {
+      "actif": "JPMorgan Chase",
+      "poche": "actions",
+      "tendance": "haussière",
+      "rsi": 57,
+      "momentum": 0.084,
+      "analystes": {
+        "recommendation": 2.03846,
+        "analysts": 23,
+        "upside": 0.08762127610006121,
+        "label": "buy"
+      }
+    }
+  ],
   "remarques": [
-    "le bot a déjà tourné aujourd'hui : rien de plus (évite les achats en double)"
+    "Actions à 60% du portefeuille (plafond) : achats suspendus ; ETF à 7% (cible 70%) : rattrapage progressif"
   ]
 }

@@ -16,3 +16,6 @@ date;mode;sens;cle;nom;isin_ou_symbole;quantite;prix_eur;montant_eur;frais_eur;i
 2026-11-17;paper;ACHAT;EUROPE600;Amundi Core Stoxx Europe 600;LU0908500753;0.03030765;328.3000;10.00;0.05;paper;momentum +4,7%, tendance haussière
 2026-11-18;paper;ACHAT;EUROPE600;Amundi Core Stoxx Europe 600;LU0908500753;0.03124019;318.5000;10.00;0.05;paper;momentum +1,1%, tendance haussière
 2026-11-19;paper;ACHAT;SP500;iShares Core S&P 500;IE00B5BMR087;0.01936659;719.2800;14.00;0.07;paper;momentum +0,6%, tendance haussière
+2026-11-20;paper;VENTE;US_TECH;iShares S&P 500 Information Technology;IE00B3WJKG14;1.07172725;39.0000;41.59;0.21;paper;stop suiveur : -17% depuis le plus haut et sous la moyenne 50 j
+2026-11-20;paper;ACHAT;EUROPE600;Amundi Core Stoxx Europe 600;LU0908500753;0.04498739;309.2000;13.98;0.07;paper;momentum -1,8%, tendance haussière, repli RSI 34
+2026-11-20;paper;ACHAT;SP500;iShares Core S&P 500;IE00B5BMR087;0.01508141;694.0600;10.52;0.05;paper;momentum -2,8%, tendance haussière, repli RSI 30

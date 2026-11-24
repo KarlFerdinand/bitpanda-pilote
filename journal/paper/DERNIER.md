@@ -1,86 +1,84 @@
-# Journal du 24/11/2026 — mode SIMULATION
+# Journal du 25/11/2026 — mode SIMULATION
 
 ## En bref
 
-- **1 achat(s) pour 17,50 €**
-- Budget de la semaine : 17,50 € dépensés sur 50,00 € ; réserve disponible : **115,59 €**
+- **1 achat(s) pour 10,00 €**
+- Budget de la semaine : 27,50 € dépensés sur 50,00 € ; réserve disponible : **105,59 €**
 - Provision en attente : ETF 0,00 €, actions 0,00 €, crypto 0,00 €
-- Portefeuille : **168,84 €** (coût 176,00 €, -4,1%)
+- Portefeuille : **182,96 €** (coût 186,00 €, -1,6%)
 
-> Ton compte Bitpanda hors bot vaut 3 142,60 € (ETF 4%, actions 67%, crypto 29%) : le bot en tient compte pour répartir ses achats, sans jamais le vendre.
-
-> Nouvelle semaine 2026-W48 : 50,00 € crédités.
+> Ton compte Bitpanda hors bot vaut 3 063,46 € (ETF 4%, actions 67%, crypto 29%) : le bot en tient compte pour répartir ses achats, sans jamais le vendre.
 
 ## Climat de marché
 
-VIX (peur sur les actions US) : **26,6**
+VIX (peur sur les actions US) : **26,4**
 
 Fear & Greed crypto : indisponible
 
 | Poche | Coefficient du jour | Pourquoi |
 |---|:---:|---|
-| ETF | ×1,75 | repli (RSI 29) dans une tendance haussière : opportunité (×1,75) |
-| Actions | ×1,75 | repli (RSI 29) dans une tendance haussière : opportunité (×1,75) |
+| ETF | ×1,00 | marché actions (ETF socle) en tendance haussière : rythme normal |
+| Actions | ×1,00 | marché actions (ETF socle) en tendance haussière : rythme normal |
 
 ## Ordres
 
 | Sens | Actif | Montant | Quantité | Prix | Frais | Raison | Statut |
 |---|---|---:|---:|---:|---:|---|---|
-| Achat | Amundi Core Stoxx Europe 600 | 17,50 € | 0.056315 | 309,20 € | 0,09 € | momentum -1,8%, tendance haussière, repli RSI 34 | ✅ |
+| Achat | iShares Core S&P 500 | 10,00 € | 0.013845 | 718,66 € | 0,05 € | momentum +0,5%, tendance haussière | ✅ |
 
 ## Remarques
 
-- Actions à 64% du portefeuille (plafond) : achats suspendus ; ETF à 8% (cible 70%) : rattrapage progressif
+- Actions à 64% du portefeuille (plafond) : achats suspendus ; ETF à 9% (cible 70%) : rattrapage progressif
 
 ## Portefeuille
 
 | Actif | Quantité | Prix | Valeur | Coût moyen | +/- |
 |---|---:|---:|---:|---:|---:|
-| Amundi Core Stoxx Europe 600 | 0.377360 | 309,20 € | 116,68 € | 321,92 € | -4,0% |
-| iShares Core S&P 500 | 0.075148 | 694,06 € | 52,16 € | 725,50 € | -4,3% |
-| **Total** | | | **168,84 €** | | |
+| Amundi Core Stoxx Europe 600 | 0.377360 | 315,35 € | 119,00 € | 321,92 € | -2,0% |
+| iShares Core S&P 500 | 0.088993 | 718,66 € | 63,96 € | 725,00 € | -0,9% |
+| **Total** | | | **182,96 €** | | |
 
 ## Signaux du jour
 
 | Poche | Actif | Prix | Tendance | RSI | Momentum (1-6 mois) | Recul 3 mois | Analystes |
 |---|---|---:|---|---:|---:|---:|---|
-| ETF | Amundi Core Stoxx Europe 600 | 309,20 € | ↗ haussière | 34 | -1,8% | -5,8% |  |
-| ETF | iShares Core S&P 500 | 694,06 € | ↗ haussière | 30 | -2,8% | -8,0% |  |
-| ETF | iShares Core MSCI World | 122,71 € | ↗ haussière | 29 | -3,0% | -7,2% |  |
-| ETF | iShares MSCI World Small Cap | 8,73 € | ↘ baissière | 32 | -3,4% | -6,1% |  |
-| ETF | iShares Nasdaq 100 | 1 342,20 € | ↘ baissière | 31 | -8,9% | -16,0% |  |
-| ETF | iShares S&P 500 Information Technology | 39,00 € | ↘ baissière | 28 | -11,1% | -21,0% |  |
-| ETF | iShares Core MSCI EM IMI | 40,96 € | ↘ baissière | 28 | -12,5% | -18,3% |  |
-| ETF | Xetra-Gold | 103,78 € | ↘ baissière | 25 | -15,3% | -18,2% |  |
-| Actions | Eli Lilly | 1 228,03 € | ↗ haussière | 54 | +18,4% | -6,0% | 1,6/5 · 29 analystes · objectif +7,7% |
-| Actions | Visa | 366,34 € | ↗ haussière | 49 | +13,9% | -5,8% | 1,5/5 · 37 analystes · objectif +10,2% |
-| Actions | Apple | 312,28 € | ↗ haussière | 52 | +12,1% | -3,1% | 2,2/5 · 39 analystes · objectif -1,0% |
-| Actions | Johnson & Johnson | 246,56 € | ↗ haussière | 52 | +11,0% | -4,7% | 2,0/5 · 22 analystes · objectif +3,6% |
-| Actions | Spotify | 526,02 € | ↗ haussière | 52 | +11,0% | -6,1% | 1,7/5 · 38 analystes · objectif +7,9% |
-| Actions | Sanofi | 84,92 € | ↗ haussière | 61 | +10,8% | -3,8% | 2,1/5 · 23 analystes · objectif +13,0% |
-| Actions | L'Oréal | 435,00 € | ↗ haussière | 53 | +9,9% | -4,5% | 2,2/5 · 24 analystes · objectif +0,1% |
-| Actions | Ferrari | 363,10 € | ↗ haussière | 49 | +8,9% | -5,1% | 1,8/5 · 18 analystes · objectif +10,0% |
-| Actions | Microsoft | 441,69 € | ↗ haussière | 39 | +8,2% | -10,8% | 1,3/5 · 54 analystes · objectif +29,4% |
-| Actions | Novartis | 137,98 € | ↗ haussière | 44 | +2,2% | -6,0% | 2,8/5 · 22 analystes · objectif +0,7% |
-| Actions | SAP | 183,68 € | ↗ haussière | 29 | +1,8% | -14,9% | 1,6/5 · 27 analystes · objectif +30,7% |
-| Actions | Amazon | 225,00 € | ↗ haussière | 45 | -0,2% | -7,6% | 1,3/5 · 60 analystes · objectif +27,8% |
-| Actions | Airbus | 189,96 € | ↗ haussière | 40 | -0,9% | -9,8% | 1,8/5 · 24 analystes · objectif +18,3% |
-| Actions | JPMorgan Chase | 283,08 € | ↗ haussière | 36 | -1,3% | -9,9% | 2,0/5 · 23 analystes · objectif +17,9% |
-| Actions | Richemont | 182,52 € | ↗ haussière | 45 | -1,6% | -9,8% | 1,8/5 · 27 analystes · objectif +17,8% |
-| Actions | Meta Platforms | 511,26 € | ↘ baissière | 32 | -2,3% | -25,2% |  |
-| Actions | Thales | 223,40 € | ↘ baissière | 43 | -6,3% | -10,6% |  |
-| Actions | AMD | 386,87 € | ↗ haussière | 39 | -6,4% | -33,2% | 1,3/5 · 49 analystes · objectif +44,7% |
-| Actions | Safran | 292,70 € | ↘ baissière | 42 | -7,1% | -16,5% |  |
-| Actions | Novo Nordisk | 35,39 € | ↘ baissière | 46 | -7,3% | -13,3% |  |
-| Actions | Palantir | 130,81 € | ↘ baissière | 29 | -9,1% | -30,0% |  |
-| Actions | Broadcom | 277,50 € | ↘ baissière | 42 | -11,6% | -17,2% |  |
-| Actions | LVMH | 381,95 € | ↘ baissière | 38 | -12,4% | -16,6% |  |
-| Actions | Schneider Electric | 226,55 € | ↘ baissière | 35 | -14,2% | -25,2% |  |
-| Actions | Hermès | 1 225,50 € | ↘ baissière | 33 | -17,1% | -23,3% |  |
-| Actions | TSMC | 290,54 € | ↘ baissière | 30 | -18,0% | -32,7% |  |
-| Actions | ASML | 1 168,00 € | ↘ baissière | 32 | -18,5% | -29,4% |  |
-| Actions | Alphabet | 241,84 € | ↘ baissière | 31 | -20,5% | -23,7% |  |
-| Actions | NVIDIA | 114,43 € | ↘ baissière | 16 | -37,8% | -46,3% |  |
+| ETF | iShares Core S&P 500 | 718,66 € | ↗ haussière | 45 | +0,5% | -4,8% |  |
+| ETF | Amundi Core Stoxx Europe 600 | 315,35 € | ↗ haussière | 44 | +0,2% | -3,9% |  |
+| ETF | iShares Core MSCI World | 126,64 € | ↗ haussière | 44 | +0,0% | -4,2% |  |
+| ETF | iShares MSCI World Small Cap | 8,94 € | ↗ haussière | 44 | -1,0% | -3,9% |  |
+| ETF | iShares Nasdaq 100 | 1 411,40 € | ↗ haussière | 44 | -4,3% | -11,7% |  |
+| ETF | iShares S&P 500 Information Technology | 41,71 € | ↗ haussière | 43 | -5,8% | -15,5% |  |
+| ETF | iShares Core MSCI EM IMI | 43,74 € | ↘ baissière | 45 | -6,9% | -12,8% |  |
+| ETF | Xetra-Gold | 108,37 € | ↘ baissière | 39 | -11,4% | -14,6% |  |
+| Actions | Eli Lilly | 1 283,58 € | ↗ haussière | 63 | +25,7% | -1,7% | 1,6/5 · 29 analystes · objectif +4,4% |
+| Actions | Visa | 380,06 € | ↗ haussière | 59 | +19,0% | -2,3% | 1,5/5 · 37 analystes · objectif +8,2% |
+| Actions | Spotify | 546,90 € | ↗ haussière | 59 | +15,8% | -2,3% | 1,7/5 · 38 analystes · objectif +6,1% |
+| Actions | Apple | 322,88 € | ↗ haussière | 61 | +15,6% | +0,0% | 2,2/5 · 39 analystes · objectif -2,4% |
+| Actions | Johnson & Johnson | 252,10 € | ↗ haussière | 58 | +14,2% | -2,5% | 2,0/5 · 22 analystes · objectif +1,2% |
+| Actions | Sanofi | 85,26 € | ↗ haussière | 62 | +12,4% | -3,5% | 2,1/5 · 21 analystes · objectif +3,9% |
+| Actions | Ferrari | 365,35 € | ↗ haussière | 51 | +10,3% | -4,5% | 1,8/5 · 18 analystes · objectif +11,3% |
+| Actions | Microsoft | 452,42 € | ↗ haussière | 45 | +10,1% | -8,6% | 1,3/5 · 54 analystes · objectif +28,5% |
+| Actions | L'Oréal | 438,25 € | ↗ haussière | 56 | +9,4% | -3,8% | 2,2/5 · 24 analystes · objectif -0,3% |
+| Actions | SAP | 186,34 € | ↗ haussière | 33 | +3,5% | -13,6% | 1,6/5 · 27 analystes · objectif +28,1% |
+| Actions | Novartis | 138,76 € | ↗ haussière | 46 | +3,1% | -5,4% | 2,8/5 · 22 analystes · objectif -0,4% |
+| Actions | Palantir | 146,98 € | ↗ haussière | 45 | +2,9% | -21,4% | 1,8/5 · 29 analystes · objectif +38,3% |
+| Actions | Richemont | 189,03 € | ↗ haussière | 54 | +2,5% | -6,6% | 1,8/5 · 27 analystes · objectif +19,1% |
+| Actions | JPMorgan Chase | 289,16 € | ↗ haussière | 42 | +1,9% | -8,0% | 2,0/5 · 23 analystes · objectif +17,8% |
+| Actions | Airbus | 195,72 € | ↗ haussière | 47 | +1,9% | -7,1% | 1,8/5 · 24 analystes · objectif +19,6% |
+| Actions | Amazon | 230,06 € | ↗ haussière | 49 | +1,8% | -5,5% | 1,3/5 · 60 analystes · objectif +29,4% |
+| Actions | Meta Platforms | 537,86 € | ↘ baissière | 42 | +1,2% | -21,3% |  |
+| Actions | Safran | 302,50 € | ↘ baissière | 50 | -1,1% | -12,1% |  |
+| Actions | Thales | 226,80 € | ↘ baissière | 48 | -5,0% | -8,1% |  |
+| Actions | Novo Nordisk | 35,64 € | ↘ baissière | 48 | -6,1% | -11,7% |  |
+| Actions | LVMH | 388,80 € | ↘ baissière | 44 | -10,2% | -15,1% |  |
+| Actions | Schneider Electric | 235,85 € | ↘ baissière | 44 | -10,6% | -22,2% |  |
+| Actions | ASML | 1 272,20 € | ↘ baissière | 43 | -10,8% | -23,1% |  |
+| Actions | TSMC | 318,44 € | ↘ baissière | 41 | -12,8% | -26,2% |  |
+| Actions | Broadcom | 274,55 € | ↘ baissière | 42 | -13,4% | -18,1% |  |
+| Actions | AMD | 376,86 € | ↗ haussière | 39 | -13,5% | -34,9% | 1,3/5 · 49 analystes · objectif +58,8% |
+| Actions | Hermès | 1 245,00 € | ↘ baissière | 37 | -14,1% | -22,1% |  |
+| Actions | Alphabet | 254,47 € | ↘ baissière | 42 | -15,6% | -19,7% |  |
+| Actions | NVIDIA | 141,69 € | ↘ baissière | 41 | -23,2% | -33,6% |  |
 
 ---
 _Journal généré automatiquement. Ceci n'est pas un conseil en investissement._

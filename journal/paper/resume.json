@@ -1,56 +1,42 @@
 {
-  "date": "2026-11-20",
+  "date": "2026-11-24",
   "mode": "paper",
   "erreur": null,
-  "valeur_eur": 151.42,
-  "investi_eur": 158.5,
-  "plus_moins_value_eur": -7.08,
-  "reserve_eur": 83.09,
-  "depense_semaine_eur": 58.5,
+  "valeur_eur": 168.84,
+  "investi_eur": 176.0,
+  "plus_moins_value_eur": -7.16,
+  "reserve_eur": 115.59,
+  "depense_semaine_eur": 17.5,
   "budget_hebdo_eur": 50.0,
-  "vix": 35.88999938964844,
-  "compte_hors_bot": "Ton compte Bitpanda hors bot vaut 2 963,06 € (ETF 4%, actions 67%, crypto 30%) : le bot en tient compte pour répartir ses achats, sans jamais le vendre.",
+  "vix": 26.6200008392334,
+  "compte_hors_bot": "Ton compte Bitpanda hors bot vaut 3 142,60 € (ETF 4%, actions 67%, crypto 29%) : le bot en tient compte pour répartir ses achats, sans jamais le vendre.",
   "coefficients": {
     "actions": {
-      "valeur": 2.45,
+      "valeur": 1.75,
       "raisons": [
-        "repli (RSI 29) dans une tendance haussière : opportunité (×1,75)",
-        "peur élevée sur les actions (VIX 36) sans cassure : on profite (×1,4)"
+        "repli (RSI 29) dans une tendance haussière : opportunité (×1,75)"
       ]
     },
     "etf": {
-      "valeur": 2.45,
+      "valeur": 1.75,
       "raisons": [
-        "repli (RSI 29) dans une tendance haussière : opportunité (×1,75)",
-        "peur élevée sur les actions (VIX 36) sans cassure : on profite (×1,4)"
+        "repli (RSI 29) dans une tendance haussière : opportunité (×1,75)"
       ]
     }
   },
   "ordres_du_jour": [
     {
-      "sens": "SELL",
-      "actif": "iShares S&P 500 Information Technology",
-      "montant_eur": 41.59,
-      "raison": "stop suiveur : -17% depuis le plus haut et sous la moyenne 50 j"
-    },
-    {
       "sens": "BUY",
       "actif": "Amundi Core Stoxx Europe 600",
-      "montant_eur": 13.98,
+      "montant_eur": 17.5,
       "raison": "momentum -1,8%, tendance haussière, repli RSI 34"
-    },
-    {
-      "sens": "BUY",
-      "actif": "iShares Core S&P 500",
-      "montant_eur": 10.52,
-      "raison": "momentum -2,8%, tendance haussière, repli RSI 30"
     }
   ],
   "positions": [
     {
       "actif": "Amundi Core Stoxx Europe 600",
-      "valeur_eur": 99.27,
-      "cout_eur": 103.98
+      "valeur_eur": 116.68,
+      "cout_eur": 121.48
     },
     {
       "actif": "iShares Core S&P 500",
@@ -138,9 +124,9 @@
       "rsi": 39,
       "momentum": 0.082,
       "analystes": {
-        "recommendation": 1.37931,
+        "recommendation": 1.34483,
         "analysts": 54,
-        "upside": 0.31289579377528276,
+        "upside": 0.2941354314720812,
         "label": "strong_buy"
       }
     },
@@ -183,9 +169,9 @@
       "rsi": 39,
       "momentum": -0.0644,
       "analystes": {
-        "recommendation": 1.35185,
+        "recommendation": 1.33333,
         "analysts": 49,
-        "upside": 0.5498547562383655,
+        "upside": 0.44712256869404166,
         "label": "strong_buy"
       }
     },
@@ -214,7 +200,7 @@
       "analystes": {
         "recommendation": 2.17778,
         "analysts": 39,
-        "upside": 0.008965728631480596,
+        "upside": -0.00987939727283138,
         "label": "buy"
       }
     },
@@ -227,7 +213,7 @@
       "analystes": {
         "recommendation": 1.32258,
         "analysts": 60,
-        "upside": 0.3228547119358238,
+        "upside": 0.27781169975331843,
         "label": "strong_buy"
       }
     },
@@ -240,7 +226,7 @@
       "analystes": {
         "recommendation": 1.55172,
         "analysts": 27,
-        "upside": 0.3259049433797909,
+        "upside": 0.30697767521734454,
         "label": "buy"
       }
     },
@@ -253,7 +239,7 @@
       "analystes": {
         "recommendation": 1.70732,
         "analysts": 38,
-        "upside": 0.10021064762664,
+        "upside": 0.07876190801379446,
         "label": "buy"
       }
     },
@@ -282,7 +268,7 @@
       "analystes": {
         "recommendation": 2.20833,
         "analysts": 24,
-        "upside": 0.005651356321839218,
+        "upside": 0.001045841414717641,
         "label": "buy"
       }
     },
@@ -290,12 +276,12 @@
       "actif": "Richemont",
       "poche": "actions",
       "tendance": "haussière",
-      "rsi": 46,
-      "momentum": -0.0111,
+      "rsi": 45,
+      "momentum": -0.0159,
       "analystes": {
         "recommendation": 1.77778,
-        "analysts": 26,
-        "upside": 0.21633739644970418,
+        "analysts": 27,
+        "upside": 0.17773371559633033,
         "label": "buy"
       }
     },
@@ -308,7 +294,7 @@
       "analystes": {
         "recommendation": 1.83333,
         "analysts": 18,
-        "upside": 0.10413412283117585,
+        "upside": 0.10037558505542621,
         "label": "buy"
       }
     },
@@ -321,7 +307,7 @@
       "analystes": {
         "recommendation": 1.64516,
         "analysts": 29,
-        "upside": 0.09126686016732122,
+        "upside": 0.07728015535688115,
         "label": "buy"
       }
     },
@@ -330,7 +316,7 @@
       "poche": "actions",
       "tendance": "baissière",
       "rsi": 46,
-      "momentum": -0.0728,
+      "momentum": -0.0727,
       "analystes": null
     },
     {
@@ -342,7 +328,7 @@
       "analystes": {
         "recommendation": 2.125,
         "analysts": 23,
-        "upside": 0.1346740461610929,
+        "upside": 0.13014919071076703,
         "label": "buy"
       }
     },
@@ -350,12 +336,12 @@
       "actif": "Novartis",
       "poche": "actions",
       "tendance": "haussière",
-      "rsi": 46,
-      "momentum": 0.0267,
+      "rsi": 44,
+      "momentum": 0.0218,
       "analystes": {
         "recommendation": 2.78261,
         "analysts": 22,
-        "upside": 0.00956355666875397,
+        "upside": 0.0069129823465083895,
         "label": "hold"
       }
     },
@@ -368,7 +354,7 @@
       "analystes": {
         "recommendation": 2.0,
         "analysts": 22,
-        "upside": 0.032149369615853685,
+        "upside": 0.03627942973523424,
         "label": "buy"
       }
     },
@@ -389,7 +375,7 @@
       "analystes": {
         "recommendation": 1.79167,
         "analysts": 24,
-        "upside": 0.21889697831122334,
+        "upside": 0.18302508685877794,
         "label": "buy"
       }
     },
@@ -418,7 +404,7 @@
       "analystes": {
         "recommendation": 1.5,
         "analysts": 37,
-        "upside": 0.12214447458133226,
+        "upside": 0.10150512945774315,
         "label": "strong_buy"
       }
     },
@@ -431,12 +417,12 @@
       "analystes": {
         "recommendation": 2.03846,
         "analysts": 23,
-        "upside": 0.20271236273467963,
+        "upside": 0.17942989326091063,
         "label": "buy"
       }
     }
   ],
   "remarques": [
-    "Actions à 63% du portefeuille (plafond) : achats suspendus ; ETF à 9% (cible 70%) : rattrapage progressif"
+    "Actions à 64% du portefeuille (plafond) : achats suspendus ; ETF à 8% (cible 70%) : rattrapage progressif"
   ]
 }

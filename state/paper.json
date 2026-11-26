@@ -1,6 +1,6 @@
 {
   "asset_ids": {},
-  "last_run": "2026-11-26",
+  "last_run": "2026-11-27",
   "ledger": {
     "credited_total": 300.0,
     "reserve": 91.59,
@@ -22,7 +22,7 @@
   "pending": {
     "actions": 0.0,
     "crypto": 0.0,
-    "etf": 0.0
+    "etf": 5.0
   },
   "positions_meta": {
     "EUROPE600": {
